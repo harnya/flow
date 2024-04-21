@@ -67,6 +67,7 @@ workflow_jobs = [Job(id=1, workflow_id=1, name="firstjob"),
     ]
 wh = []
 jh = []
+x_con = []
 class WorkflowExection:
 
     def __init__(self, workflow_name: str) -> None:
@@ -92,6 +93,9 @@ class JobExecuter():
     @staticmethod
     def execute_job(workflow_history: WorkflowHoistory, job_name: str):
         job = next((i for i in workflow_jobs if i.workflow==workflow_history.id and i.name==job_name), None)
+        # check if task has any depanedany and based on dependancy  create xcon
+        x_com = Xcom(id=1,data={"try": "hah"}, job_id=job.id, workflow_id=workflow_history.workflow, workflow_history_id=workflow_history.id)
+        x_con.append(x_com)
         job_history = JobHistory(workflow_history_id=workflow_history.id, job_id=job.id, id=len(jh) + 1)
         job_history.status = 'success'
         jh.append(job_history)
@@ -108,3 +112,6 @@ with WorkflowExection(workflow_name="second") as we:
 
     je = JobExecuter.execute_job(workflow_history=we, job_name="firstjob")
     je = JobExecuter.execute_job(workflow_history=we, job_name="secon_job")
+
+
+print(x_con)
