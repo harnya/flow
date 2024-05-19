@@ -84,7 +84,8 @@ class JobExecutorTemplate(ABC):
             task_shedule = {f'task_{task_name}': {
                     'task': task_name,
                     'schedule': 10,
-                    'args': (16, 16)
+                    'args': (self.f_args),
+                    'kwargs': (self.f_kwargs)
                 }}
             all_talsk.append(task_shedule)
 
